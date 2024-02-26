@@ -21,4 +21,4 @@ jobs:
 
       - name: Build the container image
         run: |
-          docker build -f Dockerfile_windows otelcolbuilder/cmd -t sumodrosiek/otelcol:debug-6 --platform=windows/amd64
+          docker build -f Dockerfile_windows . -t sumodrosiek/otelcol:debug-6 --platform=windows/amd64
