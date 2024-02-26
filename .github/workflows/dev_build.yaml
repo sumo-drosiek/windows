@@ -1,10 +1,9 @@
-name: Dev builds
+name: PRs checks
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
-      - 'dev-build/*'
+      - '**'
 
 defaults:
   run:
