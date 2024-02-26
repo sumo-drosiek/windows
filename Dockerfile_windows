@@ -1,0 +1,3 @@
+FROM --platform=windows/amd64 scratch
+ADD https://github.com/SumoLogic/sumologic-otel-collector/releases/download/v0.94.0-sumo-2/otelcol-sumo-0.94.0-sumo-2-windows_amd64.exe /otelcol-sumo.exe
+ENTRYPOINT ["/otelcol-sumo.exe"]

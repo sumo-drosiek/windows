@@ -1,0 +1,44 @@
+name: Dev builds
+
+on:
+  push:
+    branches:
+      - main
+      - 'dev-build/*'
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-container-windows:
+    name: Build Windows container
+    runs-on: windows-2022
+    needs:
+      - build
+    strategy:
+      matrix:
+        arch_os: [ 'windows_amd64']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3.0.0
+
+      - name: Set up Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v3.0.0
+
+      - name: Show Buildx platforms
+        run: echo ${{ steps.buildx.outputs.platforms }}
+
+      - name: Download binary action artifact from build phase
+        uses: actions/download-artifact@v4
+        with:
+          name: otelcol-sumo-${{matrix.arch_os}}
+          path: artifacts/
+
+      - name: Build the container image
+        run: |
+          docker buildx ls
+          sudo docker buildx build -f Dockerfile_windows otelcolbuilder/cmd -t sumodrosiek/otelcol:debug-6 --platform=windows/amd64 --push
