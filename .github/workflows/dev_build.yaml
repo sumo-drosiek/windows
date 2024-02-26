@@ -26,3 +26,4 @@ jobs:
         run: |
           echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
           docker build -f Dockerfile_windows . -t sumodrosiek/otelcol:debug-6 --platform=windows/amd64
+          docker push sumodrosiek/otelcol:debug-6
