@@ -1,0 +1,29 @@
+name: PRs checks
+
+on:
+  pull_request:
+    branches:
+      - '**'
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-container-windows:
+    name: Build Windows container
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        arch_os: [ 'windows_amd64']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the container image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+          docker build -f Dockerfile_windows . -t sumodrosiek/otelcol:debug-6 --platform=windows/amd64
+          docker push sumodrosiek/otelcol:debug-6
