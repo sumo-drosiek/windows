@@ -41,4 +41,4 @@ jobs:
       - name: Build the container image
         run: |
           docker buildx ls
-          sudo docker buildx build -f Dockerfile_windows otelcolbuilder/cmd -t sumodrosiek/otelcol:debug-6 --platform=windows/amd64 --push
+          sudo docker buildx build -f Dockerfile_windows otelcolbuilder/cmd -t sumodrosiek/otelcol:debug-6 --platform=windows/amd64 --push --pull
