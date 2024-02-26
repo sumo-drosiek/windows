@@ -13,8 +13,6 @@ jobs:
   build-container-windows:
     name: Build Windows container
     runs-on: windows-2022
-    needs:
-      - build
     strategy:
       matrix:
         arch_os: [ 'windows_amd64']
